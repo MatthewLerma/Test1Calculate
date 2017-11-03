@@ -1,0 +1,19 @@
+TEMPLATE = app
+CONFIG += console c++11
+CONFIG -= app_bundle
+CONFIG -= qt
+
+SOURCES += main.cpp \
+    expression.cpp \
+    fraction.cpp \
+    fractionfriends.cpp \
+    mixed.cpp \
+    stack.cpp \
+    torpn.cpp
+
+HEADERS += \
+    expression.h \
+    fraction.h \
+    mixed.h \
+    stack.h \
+    torpn.h
