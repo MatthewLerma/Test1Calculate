@@ -12,8 +12,6 @@ int main(int argc, char *argv[]) {
     string input, command, index, expression, inName;
     ifstream inFile;
 
-
-
     do
     {
         cout<<"INPUT: ";

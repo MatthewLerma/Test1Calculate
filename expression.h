@@ -8,6 +8,7 @@
 #include "toRPN.h"
 #include <vector>
 #include "fraction.h"
+
 struct term
 {
     fraction coef,power;
