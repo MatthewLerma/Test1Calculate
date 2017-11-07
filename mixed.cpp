@@ -7,12 +7,12 @@ mixed::mixed()
 
 mixed::mixed(int whole)
 {
-    value = whole;
+    value.num = whole;
+    value.denom = 1;
 }
 
 mixed::mixed(int n, int d)
 {
-    this is compiling and i dont know why
     value = n/d;
 }
 

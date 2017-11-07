@@ -28,6 +28,42 @@ void expression::copy(const expression &other)
         terms[i] = other.terms[i];
     }
 }
+
+void expression::tokenize()
+{
+    unsigned int pos;
+    tokens.clear();
+    string toTokenize = inFix,
+           token,
+           fromChar("A");
+    while(!toTokenize.empty())
+    {
+        trim(toTokenize);
+        fromChar[0] = toTokenize[0];
+        if(isOperator(fromChar))
+        {
+            trim(fromChar);
+            tokens.push_back(fromChar);
+            toTokenize.erase(0,1);
+        }
+        else
+        {
+            pos = toTokenize.find_first_of(operators);
+            token = toTokenize.substr(0,pos);
+            toTokenize =  pos > toTokenize.size() ? "" : toTokenize.substr(pos);
+            tokens.push_back(token);
+        }
+    }
+}
+
+void expression::trim(string &item)
+{
+    while(item[0] == ' ')
+        item.erase(0,1);
+    while(item[item.size()-1] == ' ')
+        item.erase(item.size()-1);
+}
+
 /*
 expression& expression::operator<<(const string &input)
 {

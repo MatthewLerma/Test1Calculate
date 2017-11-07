@@ -4,7 +4,7 @@
 #include <fstream>
 #include <string>
 #include <cstdlib>
-//#include "mixed.h"
+#include "mixed.h"
 #include "toRPN.h"
 #include <vector>
 #include "fraction.h"
@@ -33,10 +33,12 @@ class expression
         istream& operator>>(istream &in, expression &exp);
 */
     private:
-        string expressionToStore;
-        toRPN expressionInRPN;
+        //string expressionToStore;   //dont think I need this
         vector<term> terms;
+        vector<string> tokens;
         void copy(const expression &other);
+        void expression::tokenize();
+        void expression::trim(string &item);
        // void expression::Destroy();
 };
 
