@@ -30,52 +30,57 @@ void expression::copy(const expression &other)
     }
 }
 
+//bool expression::isOperator(const string &token) const
+//{
+//    return token.find_first_of(operators) < token.size();
+//}
+
 void expression::tokenize()
 {
-//    unsigned int pos;
-//    tokens.clear();
-//    string toTokenize = inFix,
-//           token,
-//           fromChar("A");
-//    while(!toTokenize.empty())
-//    {
-//        trim(toTokenize);
-//        fromChar[0] = toTokenize[0];
-//        if(isOperator(fromChar))
-//        {
-//            trim(fromChar);
-//            tokens.push_back(fromChar);
-//            toTokenize.erase(0,1);
-//        }
-//        else
-//        {
-//            pos = toTokenize.find_first_of(operators);
-//            token = toTokenize.substr(0,pos);
-//            toTokenize =  pos > toTokenize.size() ? "" : toTokenize.substr(pos);
-//            tokens.push_back(token);
-//        }
-//    }
+    unsigned int pos;
     tokens.clear();
-    string temp;
-    int pos = expression.find_first_of('+')
-
-    temp = expression.substr(0, pos);
-
-    while(!expression.empty())
+    string toTokenize = inFix,
+           token,
+           fromChar("A");
+    while(!toTokenize.empty())
     {
-        if(expression.find('+'))
+        trim(toTokenize);
+        fromChar[0] = toTokenize[0];
+        if(isOperator(fromChar))
         {
-            expression.erase(0, pos);
-            trim(temp);
-            tokens.push_back(temp);
+            trim(fromChar);
+            tokens.push_back(fromChar);
+            toTokenize.erase(0,1);
         }
         else
         {
-            trim(expression);
-            tokens.push_back(expression);
-            expression.clear();
+            pos = toTokenize.find_first_of(operators);
+            token = toTokenize.substr(0,pos);
+            toTokenize =  pos > toTokenize.size() ? "" : toTokenize.substr(pos);
+            tokens.push_back(token);
         }
     }
+//    tokens.clear();
+//    string temp;
+//    int pos = expression.find_first_of('+')
+
+//    temp = expression.substr(0, pos);
+
+//    while(!expression.empty())
+//    {
+//        if(expression.find('+'))
+//        {
+//            expression.erase(0, pos);
+//            trim(temp);
+//            tokens.push_back(temp);
+//        }
+//        else
+//        {
+//            trim(expression);
+//            tokens.push_back(expression);
+//            expression.clear();
+//        }
+//    }
 
 }
 
@@ -90,29 +95,33 @@ void expression::trim(string &item)
 
 expression& expression::operator<<(const string &input)
 {
+    inFix = input;
+    postFix.clear();
+    tokens.clear();
+    tokenize();
     return *this;
 }
-/*
-bool goodExpression()
-{
 
-}
+//bool goodExpression()
+//{
+//    //used to check if their input makes sense
+//}
 
-fraction evaluateAt(const fraction &value)
-{
+//fraction evaluateAt(const fraction &value)
+//{
+//    //used for evaluate e.g. F(1/4) =
+//}
 
-}
+//ostream& operator<<(ostream &out, const expression &exp)
+//{
 
-ostream& operator<<(ostream &out, const expression &exp)
-{
+//}
 
-}
+//istream& operator>>(istream &in, expression &exp)
+//{
 
-istream& operator>>(istream &in, expression &exp)
-{
+//}
 
-}
-*/
 
 expression& expression::derivative(unsigned int x)
 {
@@ -122,14 +131,12 @@ expression& expression::derivative(unsigned int x)
             terms[i].coef = terms[i].coef * terms[i].power;
             terms[i].power = terms[i].power - 1;
         }
-    return ;
+    return *this;
 }
 
 
 void expression::Destroy()
 {
     for(unsigned int i = 0; i < terms.size(); ++i)
-        terms[i] = '\0';
-    delete [] terms;
-    terms = NULL;
+        terms.erase(terms.begin());
 }

@@ -1,4 +1,5 @@
-#include "mixed.h"
+#include "fraction.h"
+#include "expression.h"
 #include <string>
 
 using namespace std;
@@ -35,24 +36,24 @@ int main(int argc, char *argv[]) {
     return 0;
 }
 
-void normalizeInput(string input, string &command, string &index, string &expression)
-{
-    unsigned int pos, pos2, pos3;
+//void normalizeInput(string input, string &command, string &index, string &expression)
+//{
+//    unsigned int pos, pos2, pos3;
 
-    cout << input << endl;
-    pos = input.find_first_of(' ');
-    command = input.substr(0, pos);
-    input.erase(0, pos);
+//    cout << input << endl;
+//    pos = input.find_first_of(' ');
+//    command = input.substr(0, pos);
+//    input.erase(0, pos);
 
-    cout << input << endl;
-    pos2 = input.find_first_of('=');
-    index = input.substr(0, pos2-1);
-    input.erase(0, pos);
+//    cout << input << endl;
+//    pos2 = input.find_first_of('=');
+//    index = input.substr(0, pos2-1);
+//    input.erase(0, pos);
 
-    cout << input << endl;
-    pos = input.find_first_of('=');
-    expression = input.substr(pos + 1, string::npos);
-}
+//    cout << input << endl;
+//    pos = input.find_first_of('=');
+//    expression = input.substr(pos + 1, string::npos);
+//}
 
 void CommandLine(const char *title, int argc, char *argv[], ifstream &inFile, string &inName)
 {
@@ -71,6 +72,7 @@ void CommandLine(const char *title, int argc, char *argv[], ifstream &inFile, st
         }
         else
         {
+            inName = argv[1];
             openInput(inName, inFile, argv);
         }
 
@@ -90,12 +92,19 @@ void CommandLine(const char *title, int argc, char *argv[], ifstream &inFile, st
 void openInput(string &inName, ifstream &inFile, char *argv[])
 {
     bool again;
-    string temp = inName;
+    string temp = inName, extension;
     if (temp.empty())
     {
         cout << "Please enter a filename for input: ";
         cin >> temp;
     }
+    if(temp.find(".") > temp.size())
+        {
+            cout<<"Please enter a file extension (press enter for .exp): ";
+            getline(cin, extension);
+            if(extension.empty())
+                extension = ".exp";
+        }
     inFile.open(temp.c_str());
     if(inFile.fail())
     {
@@ -109,4 +118,38 @@ void openInput(string &inName, ifstream &inFile, char *argv[])
         cout << "File opened\n";
     }
 
+}
+
+void openOutput(const string &name, ofstream &out)
+{
+    string extension, answer, temp;
+    ifstream in;
+    if(name.find(".") > name.size())
+    {
+        cout<<"Please enter a file extension (press enter for .txt): ";
+        getline(cin, extension);
+        if(extension.empty())
+            extension = ".txt";
+        temp = name + extension;
+    }
+    in.open(temp.c_str());
+    if(in.fail())
+    {
+        in.close();
+        in.clear();
+        cout<<"That output file already exists. "<<endl
+           <<"Do you want to (O)verwrite or (Q)uit? ";
+        getline(cin,answer);
+        switch(toupper(answer[0]))
+        {
+            case 'O' : out.open(temp.c_str(), ios::binary);
+                       break;
+
+            default  : cout<<"Unknown answer... quitting!"<<endl;
+            case 'Q' : exit(0);
+        }
+
+    }
+    else
+        out.open(name.c_str());
 }

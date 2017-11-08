@@ -7,13 +7,9 @@ SOURCES += main.cpp \
     expression.cpp \
     fraction.cpp \
     fractionfriends.cpp \
-    mixed.cpp \
-    stack.cpp \
-    torpn.cpp
+    mixed.cpp
 
 HEADERS += \
     expression.h \
     fraction.h \
-    mixed.h \
-    stack.h \
-    torpn.h
+    mixed.h

@@ -16,6 +16,7 @@ class fraction
         fraction(); // The "DEFAULT" constructor
         fraction(int n); //The "one argument" constructor
         fraction(int n, int d); //The "two argument" constructor
+        fraction(int whole, int n, int d); //Three argument constructor
         fraction(double x);
     //Destructor
         ~fraction(); //Destructor

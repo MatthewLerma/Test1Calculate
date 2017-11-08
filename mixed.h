@@ -9,6 +9,8 @@ class mixed
     public:
     //const
         mixed();
+        mixed(int whole);
+        mixed(int n, int d);
         mixed(int whole, int n = 0, int d = 1);
         mixed(double x);
     //destruct
@@ -32,8 +34,8 @@ class mixed
 
 
     private:
-
         fraction value;
+        void mixed::copy(const mixed &other);
 };
 
 #endif // MIXED_H
